@@ -23,6 +23,7 @@ dependency-reduced-pom.xml
 .settings/
 .sts4-cache/
 .attach_pid*
+.vscode
 
 # IntelliJ IDEA Files
 

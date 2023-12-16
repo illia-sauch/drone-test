@@ -6,6 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "drone")
@@ -16,8 +19,15 @@ public class Drone {
 	@Column(name = "id", updatable = false, nullable = false)
 	private Integer id;
 
+    @Min(value = 0, message = "x should not be less than 0")
+    @Max(value = 10, message = "x should not be greater than 10")
     private int x;
+
+    @Min(value = 0, message = "y should not be less than 0")
+    @Max(value = 10, message = "y should not be greater than 10")
     private int y;
+
+    @Pattern(regexp = "(N|S|E|W|NE|SE|SW|NW)", message = "Not valid prev direction")
     private String prevDir;
 
 	protected Drone() {}
@@ -61,18 +71,11 @@ public class Drone {
 
 	@Override
     public String toString() {
-        return "FamilyMember{" +
+        return "Drone{" +
                 "id=" + id +
                 ", x='" + x + '\'' +
                 ", y='" + y + '\'' +
                 ", prevDir=" + prevDir +
                 '}';
     }
-	// public String getFirstName() {
-	// 	return firstName;
-	// }
-
-	// public String getLastName() {
-	// 	return lastName;
-	// }
 }

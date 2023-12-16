@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import com.example.demo.dao.DroneRepository;
 import com.example.demo.model.Drone;
 
+import jakarta.validation.Valid;
+
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
@@ -19,13 +21,11 @@ public class DroneController {
     DroneRepository droneRepository;
 
     @PostMapping("/register")
-    public ResponseEntity<String> createMember(@RequestBody Drone drone) throws SQLIntegrityConstraintViolationException {
-        // if (drone.getNameById(drone.getId())!= null) {
-        //     return new ResponseEntity<String>("Duplicate Entry" + drone.getId(), HttpStatus.IM_USED);
-        // }
+    public ResponseEntity<String> createMember(@Valid @RequestBody Drone drone) throws SQLIntegrityConstraintViolationException {
         droneRepository.save(drone);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
     @PostMapping("/test")
     public ResponseEntity<String> te(@RequestBody Drone drone) throws SQLIntegrityConstraintViolationException {
 

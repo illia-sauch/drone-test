@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.example.demo.controller.validators.DroneRegisterConstraint;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,7 +29,10 @@ public class Drone {
     @Max(value = 10, message = "y should not be greater than 10")
     private int y;
 
-    @Pattern(regexp = "(N|S|E|W|NE|SE|SW|NW)", message = "Not valid prev direction")
+    // @Pattern(regexp = "(N|S|E|W|NE|SE|SW|NW)", message = "Not valid prev direction")
+    // private String prevDir;
+
+    @DroneRegisterConstraint
     private String prevDir;
 
 	protected Drone() {}

@@ -13,6 +13,9 @@ import jakarta.validation.Valid;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
+import org.springframework.validation.BindingResult;
+
+
 @RestController
 @RequestMapping("/drone")
 public class DroneController {
@@ -21,13 +24,36 @@ public class DroneController {
     DroneRepository droneRepository;
 
     @PostMapping("/register")
-    public ResponseEntity<String> createMember(@Valid @RequestBody Drone drone) throws SQLIntegrityConstraintViolationException {
-        droneRepository.save(drone);
+
+    // public ResponseEntity<String> createMember(@Valid @RequestBody Drone drone) throws SQLIntegrityConstraintViolationException {
+    // public ResponseEntity<String> createMember(@RequestBody @Valid @ModelAttribute("drone") ValidatedDrone drone, BindingResult result) throws SQLIntegrityConstraintViolationException {
+
+    public ResponseEntity<String> createMember(@RequestBody @Valid Drone drone, BindingResult result) throws SQLIntegrityConstraintViolationException {
+        System.err.println("hehehe " + drone);
+        System.err.println("tyty " + drone.getClass());
+        System.err.println("get prev d:::" + drone.getPrevDir());
+        System.err.println("res has errors:::" + result.hasErrors());
+        // droneRepository.save(drone);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/test")
     public ResponseEntity<String> te(@RequestBody Drone drone) throws SQLIntegrityConstraintViolationException {
+
+        System.out.println("babaski");
+        System.out.println(drone.toString());
+
+        return ResponseEntity.status(HttpStatus.NON_AUTHORITATIVE_INFORMATION).build();
+    }
+
+    @PostMapping("/move")
+    public ResponseEntity<String> move(@RequestBody Drone drone) throws SQLIntegrityConstraintViolationException {
+        int id = drone.getId();
+        Drone droneToMove = droneRepository.findById(id);
+
+        // if ( != null) {
+        //     return new ResponseEntity<String>("No drone presented " + drone.getId(), HttpStatus.BAD_REQUEST);
+        // }
 
         System.out.println("babaski");
         System.out.println(drone.toString());
@@ -42,7 +68,7 @@ public class DroneController {
     }
 
     @GetMapping("/all")
-    public List<Drone> getAllMembers() {
+    public List<Drone> getAllDrones() {
         return droneRepository.findAll();
     }
 
